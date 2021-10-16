@@ -136,17 +136,24 @@ exports.getAllProperties = getAllProperties;
   LIMIT $${queryParams.length};
   `;
 
-  // 5
-  console.log(queryString, queryParams);
-
-  // 6
-  return pool.query(queryString, queryParams).then((res) => res.rows);
 /**
  * Add a property to the database
  * @param {{}} property An object containing all of the property details.
  * @return {Promise<{}>} A promise to the property.
  */
 const addProperty = function(property) {
+
+  pool.query(`
+  SELECT id, name, property_id
+  FROM students
+  LIMIT 5;
+  RETURNING *
+  `)
+  .then(res => {
+    console.log(res);
+  })
+  .catch(err => console.error('query error', err.stack));
+
   const propertyId = Object.keys(properties).length + 1;
   property.id = propertyId;
   properties[propertyId] = property;
