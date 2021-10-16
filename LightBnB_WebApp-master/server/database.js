@@ -67,7 +67,20 @@ exports.addUser = addUser;
  * @return {Promise<[{}]>} A promise to the reservations.
  */
 const getAllReservations = function(guest_id, limit = 10) {
+
+  const text = 'INSERT INTO reservations VALUES($1) RETURNING *'
+const values = [req.body,]
+// callback
+client.query(text, values, (err, res) => {
+  if (err) {
+    console.log(err.stack)
+  } else {
+  }
+})
+
+
   return getAllProperties(null, 2);
+
 }
 exports.getAllReservations = getAllReservations;
 
